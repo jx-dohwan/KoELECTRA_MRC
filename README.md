@@ -1,7 +1,7 @@
 
 ## 💡프로젝트 소개
 
-#### 1️⃣ 주제 : 질의 응답을 위한 기계독<br>
+#### 1️⃣ 주제 : 질의 응답을 위한 기계독해<br>
 #### 2️⃣ 설명 : [KorQuAD: 기계독해를 위한 한국어 질의응답 데이터셋](https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE07613668)을 기반으로 기계독해 모댈 구현<br> 
 #### 3️⃣ 모델 : Hugging Face [monologg/koelectra-base-v3-discriminator](https://huggingface.co/monologg/koelectra-base-v3-discriminator) 모델 사용하여 진행<br><br>
 
@@ -13,61 +13,74 @@
 ### 부연설명
 - 스탠포드 대학교의 SQuAD 1.0를 표방한 데이터셋
 - 1,560개의 한국어 위키피디아 문서에서 10,645건의 문단과 66,181개의 질의응답 쌍
-- Training set 60,407 / Dev set 5,774 질의응답 쌍으로 구
+- Training set 60,407 / Dev set 5,774 질의응답 쌍으로 구성
 
 
 ---
 ## 1. train
 
 ```
-logdirlocation = 'LOG/KLUE'
-os.makedirs(logdirlocation, exist_ok=True)
-
-!python SRC/train.py \
-  -mode train \
-  -encoder transformer \
-  -dropout 0.1 \
-  -bert_data_path data/bert_data/train/korean \
-  -model_path MODEL/KLUE/bert_transformer \
-  -lr 2e-3 \
-  -visible_gpus 0 \
-  -gpu_ranks 0 \
-  -world_size 1 \
-  -report_every 1000\
-  -save_checkpoint_steps 100 \
-  -batch_size 1000 \
-  -decay_method noam \
-  -train_steps 1000 \
-  -accum_count 2 \
-  -log_file LOG/KLUE/bert_transformer.txt \
-  -use_interval true \
-  -warmup_steps 200 \
-  -ff_size 2048 \
-  -inter_layers 2 \
-  -heads 8
+!python run_korquad.py \
+    --model_type electra \
+    --model_name_or_path monologg/koelectra-base-v3-discriminator \
+    --output_dir koelectra-base-v3-korquad \
+    --data_dir data \
+    --train_file korquad/KorQuAD_v1.0_train.json \
+    --predict_file korquad/KorQuAD_v1.0_dev.json \
+    --max_seq_length 512 \
+    --doc_stride 128 \
+    --max_query_length 64 \
+    --do_train \
+    --do_eval \
+    --evaluate_during_training \
+    --per_gpu_train_batch_size=16 \
+    --per_gpu_eval_batch_size=8 \
+    --learning_rate 5e-5 \
+    --gradient_accumulation_steps 1 \
+    --weight_decay 0.0 \
+    --adam_epsilon 1e-8 \
+    --max_grad_norm 1.0 \
+    --num_train_epochs 3 \
+    --max_steps -1 \
+    --warmup_steps 0 \
+    --n_best_size 20 \
+    --max_answer_length 30 \
+    --verbose_logging \
+    --logging_steps 1000 \
+    --save_steps 1000 \
+    --eval_all_checkpoints \
+    --overwrite_output_dir \
+    --seed 42 \
+    --local_rank -1 \
+    --threads 4
 ```
 
 ## 2. Test
 ```
-!python SRC/train.py \
-  -mode inference \
-  -visible_gpus -1 \
-  -gpu_ranks -1 \
-  -world_size 0 \
-  -log_file LOG/KLUE/bert_transformer.txt \
-  -test_from MODEL/KLUE/bert_transformer/model_step_1000.pt \
-  -input_text raw_data/valid/valid_0.txt
+from evaluate import evaluate_result
+
+dataset_file = 'data/korquad/KorQuAD_v1.0_dev.json'
+prediction_file = 'koelectra-base-v3-korquad/predictions_korquad.json'
+evaluate_result(dataset_file, prediction_file)
+```
+
+```
+from evaluate import analyze_result
+
+dataset_file = 'data/korquad/KorQuAD_v1.0_dev.json'
+prediction_file = 'koelectra-base-v3-korquad/predictions_korquad.json'
+f1_threshold = 0.85
+model_name_or_path = 'koelectra-base-v3-korquad/checkpoint-12000'
+analyze_result(dataset_file, prediction_file, f1_threshold, model_name_or_path)
 ```
 
 ---
 ## 🗓️ 프로젝트 개선 진행
 
-|개선사항|이유|진행률(%)|
-|:-----:|:-----:|:-----:|
-|Data Augmentation|법률문서 낮은 score||
-|5만 step로 학습|테스트로 1000 학습||
-|Transformer로 서비스 구현|Transformer가 가장 성능이 좋음||
-|RoBERTa, ELECTRA등 고려|BERT보다 좋은 성능 모델 존재||
-
-
+|개선사항|기타|진행률(%)|진행할 사항|
+|:-----:|:-----:|:-----:|:-----:|
+|Data augmentation|AIHub, KLUE MRC|0|True|
+|Balanced Sampling|긴문서를 자르다 보니 정답이 존재하지 않는<br> 청크가 많아져 정답 없음에 편향될 수 있음|0||
+|batch_size 조절|클수록 노이즈를 제거하고 더 나은 GD수행<br>자연 한정될 경우 gradient accumulation, fp16등 활용|||
+|max sequence length|길수록 좋음(ex:bigbird,LittleBird)|||
 ---
