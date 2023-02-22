@@ -1,9 +1,9 @@
 
 ## 💡프로젝트 소개
 
-#### 1️⃣ 주제 : 텍스트 추출 요약<br>
-#### 2️⃣ 설명 : [Fine-tune BERT for Extractive Summarization](https://arxiv.org/pdf/1903.10318v2.pdf)을 기반으로 추출 요약 모델 구현<br> 
-#### 3️⃣ 모델 : Hugging Face [klue/bert-base](https://huggingface.co/klue/bert-base) 모델 사용하여 진행<br><br>
+#### 1️⃣ 주제 : 질의 응답을 위한 기계독<br>
+#### 2️⃣ 설명 : [KorQuAD: 기계독해를 위한 한국어 질의응답 데이터셋](https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE07613668)을 기반으로 기계독해 모댈 구현<br> 
+#### 3️⃣ 모델 : Hugging Face [monologg/koelectra-base-v3-discriminator](https://huggingface.co/monologg/koelectra-base-v3-discriminator) 모델 사용하여 진행<br><br>
 
 ## 논문 소개
 - BERT를 기반으로 Simple Classifier, Inter-sentence Transformer, Recurrent Neural Network 세가지 종류의 summarization-specific layers를 추가하여 추출 요약 실험 진행
