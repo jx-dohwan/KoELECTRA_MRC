@@ -5,6 +5,11 @@
 #### 2️⃣ 설명 : [KorQuAD: 기계독해를 위한 한국어 질의응답 데이터셋](https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE07613668)을 기반으로 기계독해 모델 구현<br> 
 #### 3️⃣ 모델 : Hugging Face [monologg/koelectra-base-v3-discriminator](https://huggingface.co/monologg/koelectra-base-v3-discriminator) 모델 사용하여 진행<br><br>
 
+### 해당 프로젝트에 관한 자세한 사항은 블로그에 정리해 놓았다.
+- [KoELECTRA를 활용한 Q&A를 위한 기계독해_1(ft.베이스라인 이론편)](https://velog.io/@jx7789/KoELECTRA%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-QA%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B8%B0%EA%B3%84%EB%8F%85%ED%95%B41ft.%EB%B2%A0%EC%9D%B4%EC%8A%A4%EB%9D%BC%EC%9D%B8%ED%8E%B8)
+- [KoELECTRA를 활용한 Q&A를 위한 기계독해_1(ft.베이스라인 코드편)](https://velog.io/@jx7789/KoELECTRA%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-QA%EB%A5%BC-%EC%9C%84%ED%95%9C-%EA%B8%B0%EA%B3%84%EB%8F%85%ED%95%B41ft.%EB%B2%A0%EC%9D%B4%EC%8A%A4%EB%9D%BC%EC%9D%B8-%EC%BD%94%EB%93%9C%ED%8E%B8)
+
+
 ## 논문 소개
 - 한국어 위키백과를 기반으로 한 대규모 기계 독해 데이터셋으로 KorquAD 1.0~2.0이 있지만 여기서는 1.0 버전을 활용한다. 
 <br>
