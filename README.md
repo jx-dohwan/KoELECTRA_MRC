@@ -84,7 +84,7 @@ analyze_result(dataset_file, prediction_file, f1_threshold, model_name_or_path)
 
 |개선사항|기타|진행률(%)|진행할 사항|
 |:-----:|:-----:|:-----:|:-----:|
-|2.0으로 업그레이드|AIHub데이터, KorQuAD 2.0 사용|0|True|
-|다중 태스크 학습|다양한 태스크의 데이터를 학습하여 효율성 극대화|0||
+|2.0으로 업그레이드|AIHub데이터, KorQuAD 2.0 사용|||
+|다중 태스크 학습|다양한 태스크의 데이터를 학습하여 효율성 극대화|||
 
 ---
