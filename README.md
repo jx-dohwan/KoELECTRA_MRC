@@ -1,7 +1,7 @@
 
 ## 💡프로젝트 소개
 
-#### 1️⃣ 주제 : 질의 응답을 위한 기계독해<br>
+#### 1️⃣ 주제 : RoBERTa를 활용한 대화 속 감정 인식<br>
 #### 2️⃣ 설명 : [KorQuAD: 기계독해를 위한 한국어 질의응답 데이터셋](https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE07613668)을 기반으로 기계독해 모델 구현<br> 
 #### 3️⃣ 모델 : Hugging Face [monologg/koelectra-base-v3-discriminator](https://huggingface.co/monologg/koelectra-base-v3-discriminator) 모델 사용하여 진행<br><br>
 
