@@ -84,8 +84,7 @@ analyze_result(dataset_file, prediction_file, f1_threshold, model_name_or_path)
 
 |개선사항|기타|진행률(%)|진행할 사항|
 |:-----:|:-----:|:-----:|:-----:|
-|Data augmentation|AIHub, KLUE MRC|0|True|
-|Balanced Sampling|긴문서를 자르다 보니 정답이 존재하지 않는<br> 청크가 많아져 정답 없음에 편향될 수 있음|0||
-|batch_size 조절|클수록 노이즈를 제거하고 더 나은 GD수행<br>자연 한정될 경우 gradient accumulation, fp16등 활용|||
-|max sequence length|길수록 좋음(ex:bigbird,LittleBird)|||
+|2.0으로 업그레이드|AIHub데이터, KorQuAD 2.0 사용|0|True|
+|다중 태스크 학습|다양한 태스크의 데이터를 학습하여 효율성 극대화|0||
+
 ---
